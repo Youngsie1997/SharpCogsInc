@@ -11,6 +11,7 @@ using SharpCogsInc.Models;
 using SharpCogsInc.Services;
 using SharpCogsInc.ViewModels;
 using SharpCogsInc.Views;
+using System.Net.Http;
 
 namespace SharpCogsInc;
 
@@ -30,6 +31,11 @@ public partial class App : Application
         collection.AddTransient<RegisterViewModel>();
         collection.AddTransient<HomeViewModel>();
         collection.AddTransient<SettingsViewModel>();
+        collection.AddHttpClient<ApiService>(client =>
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("SharpCogsInc/1.0.0");
+            client.BaseAddress = new Uri("https://corporateclash.net/api/v1/");
+        });
 
         collection.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
         {
@@ -49,6 +55,7 @@ public partial class App : Application
             desktop.MainWindow = new MainView
             {
                 DataContext = services.GetRequiredService<MainViewModel>()
+                
             };
         }
 

@@ -4,14 +4,20 @@ namespace SharpCogsInc.Models;
 public class ClashFile
 {
     [JsonPropertyName("fileName")]
-    private string FileName { get; set; }
+    public string FileName { get; set; }
     [JsonPropertyName("filePath")]
-    private string FilePath { get; set; }
+    public string FilePath { get; set; }
     [JsonPropertyName("sha1")]
-    private string Sha1 { get; set; }
+    public string Sha1 { get; set; }
     [JsonPropertyName("compressed_sha1")]
-    private string CompressedSha1 { get; set; }
+    public string CompressedSha1 { get; set; }
 
 
     [JsonIgnore] public bool PlatformSpecific { get; set; } = false;
+
+
+    override public string ToString()
+    {
+        return $"fileName: {FileName} \n FilePath: {FilePath} \n Sha1: {Sha1} \n Compress Sha1 {CompressedSha1}";
+    }
 }

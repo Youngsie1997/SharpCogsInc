@@ -18,10 +18,6 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel/>
     </Design.DataContext>
-
-    <Grid ColumnDefinitions="300,*" RowDefinitions="Auto,Auto">
-        <TextBox Grid.Column="0" Grid.Row="0" >News goes here</TextBox>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentPage}"></ContentControl>
-    </Grid>
+        <ContentControl  Content="{Binding CurrentPage}"></ContentControl>
 
 </Window>

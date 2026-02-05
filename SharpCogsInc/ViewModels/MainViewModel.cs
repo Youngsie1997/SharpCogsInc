@@ -1,7 +1,4 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using SharpCogsInc.Factories;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SharpCogsInc.Models;
 using SharpCogsInc.Services;
 
@@ -20,7 +17,7 @@ public partial class MainViewModel : PageViewModel
 
        _navigationService.NavigationRequested += OnNavigationRequested;
        
-       navigationService.NavigateTo(ApplicationPageNames.Register);
+       navigationService.NavigateTo(ApplicationPageNames.Home);
 
     }
 
@@ -28,6 +25,7 @@ public partial class MainViewModel : PageViewModel
     {
         CurrentPage = newPage;
     }
+    
 
 
     

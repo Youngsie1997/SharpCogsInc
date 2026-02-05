@@ -7,6 +7,9 @@
              x:Class="SharpCogsInc.Views.HomeView"
              x:DataType="vm:HomeViewModel">
     
-    
-    <Button Command="{Binding GoToRegisterCommand}">Register</Button>
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" ColumnDefinitions="Auto,Auto,Auto" Margin="10" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+    <ComboBox SelectedItem="{Binding SelectedClashAccount, Mode=OneWayToSource}" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" ItemsSource="{Binding ClashAccounts}"></ComboBox>
+        <Button Grid.Row="0" Grid.Column="1" Content="Add Account" Command="{Binding GoToRegisterCommand}"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Command="{Binding GetMetaDataCommand }">get metadata</Button>
+    </Grid> 
 </UserControl>
