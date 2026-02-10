@@ -1,5 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SharpCogsInc.Models;
@@ -9,9 +11,7 @@ namespace SharpCogsInc.ViewModels;
 
 public partial class HomeViewModel : PageViewModel
 {
-   [ObservableProperty]
-   private string _title;
-   private INavigationService _navigationService;
+   private readonly INavigationService _navigationService;
    [ObservableProperty]
    private int _progress;
 
@@ -19,24 +19,23 @@ public partial class HomeViewModel : PageViewModel
    private ObservableCollection<ClashAccount> _clashAccounts = new ObservableCollection<ClashAccount>();
    [ObservableProperty]
    private ClashAccount _selectedClashAccount;
-   
+
+   private readonly LinuxSettings  _launcherSettings;
    private readonly ApiService _apiService;
 
 
 
-   public HomeViewModel(INavigationService navigationService, ApiService apiService)
+   public HomeViewModel(INavigationService navigationService, ApiService apiService, LinuxSettings launcherSettings)
    {
       PageName = ApplicationPageNames.Home;
       _navigationService = navigationService;
       var accountsLoaded =  FileService.LoadFromFile();
       _apiService = apiService;
-
-      if (accountsLoaded.Count > 0)
+      _launcherSettings = launcherSettings;
+      if (accountsLoaded is not { Count: > 0 }) return;
+      foreach (var account in accountsLoaded.OfType<ClashAccount>())
       {
-          foreach (var account in accountsLoaded)
-          {
-              _clashAccounts.Add(account);
-          }
+          _clashAccounts.Add(account);
       }
 
    }
@@ -50,14 +49,30 @@ public partial class HomeViewModel : PageViewModel
    }
 
    [RelayCommand]
-   private async void GetMetaData()
+   private void GoToSettings()
    {
-       var manifest = await _apiService.GetManifestAsync(_selectedClashAccount.Token);
-       foreach (var file in manifest.Files) 
-       {
-          Console.WriteLine(file); 
-       }
-       
+       _navigationService.NavigateTo(ApplicationPageNames.Settings);
    }
+
+   [RelayCommand]
+   private async Task GetMetaData()
+   {
+       var patchManifest = await _apiService.GetClashManifests(SelectedClashAccount.Token);
+
+       if (patchManifest is not null)
+       {
+           var filepaths = await FileService.GetFilePaths(patchManifest.Files);
+
+           foreach (var file in filepaths)
+           {
+               Console.WriteLine(file.Item1);
+           }
+           
+       }
+
+       if (_launcherSettings.WineBinary != null)
+           Console.WriteLine(await FileService.GetSha1FileHash(_launcherSettings.WineBinary));
+   }
+
 
 }

@@ -18,6 +18,15 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel/>
     </Design.DataContext>
-        <ContentControl  Content="{Binding CurrentPage}"></ContentControl>
+    
+    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*">
+        <Border BorderThickness="10" Background="Orange" Margin="0" Padding="0" >
+        <DockPanel HorizontalAlignment="Center" Grid.Row="0">
+            <Button Foreground="Black" Margin="10" CornerRadius="10" Command="{Binding GoToHomeCommand}">Home</Button>
+            <Button Foreground="Black" Margin="10" CornerRadius="10" Command="{Binding GoToSettingsCommand}">Settings</Button>
+        </DockPanel>
+            </Border>
+        <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Content="{Binding CurrentPage}"></ContentControl>
 
+        </Grid>
 </Window>

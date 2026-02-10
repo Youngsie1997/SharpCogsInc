@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Reflection;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SharpCogsInc.Models;
 using SharpCogsInc.Services;
 
@@ -25,8 +28,25 @@ public partial class MainViewModel : PageViewModel
     {
         CurrentPage = newPage;
     }
-    
 
+
+    [RelayCommand]
+    private void GoToSettings()
+    {
+        _navigationService.NavigateTo(ApplicationPageNames.Settings);
+    }
+
+    [RelayCommand]
+    private void GoToHome()
+    {
+        _navigationService.NavigateTo(ApplicationPageNames.Home);
+    }
+
+    [RelayCommand]
+    private void GoToRegister()
+    {
+        _navigationService.NavigateTo(ApplicationPageNames.Register);
+    }
 
     
 }

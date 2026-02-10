@@ -18,6 +18,7 @@ public class ClashFile
 
     override public string ToString()
     {
-        return $"fileName: {FileName} \n FilePath: {FilePath} \n Sha1: {Sha1} \n Compress Sha1 {CompressedSha1}";
+        return $"fileName: {FileName} \n FilePath: {FilePath} \n Sha1: {Sha1} \n Compress Sha1 {CompressedSha1} \n " +
+               $"platformSpecific: {PlatformSpecific}";
     }
 }

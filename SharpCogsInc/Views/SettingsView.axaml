@@ -2,7 +2,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SharpCogsInc.ViewModels"
+             x:DataType="vm:SettingsViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SharpCogsInc.Views.SettingsView">
-    Welcome to Avalonia!
+    <Grid VerticalAlignment="Center"  HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto, *" ColumnSpacing="5"  RowSpacing="5">
+        <Label Grid.Column="0" Grid.Row="0" >Download Path: </Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Watermark="Download path" IsReadOnly="True" Width="500" Text="{Binding DownloadPath}" >
+            <TextBox.InnerRightContent>
+                <Button Command="{Binding SelectDownloadFolderCommand}">X</Button>
+                </TextBox.InnerRightContent>
+        </TextBox>
+        
+        <Label Grid.Column="0" Grid.Row="1" >Wine Binary: </Label>
+        <TextBox Grid.Column="1" Grid.Row="1" Watermark="Wine Binary" VerticalContentAlignment="Center" IsReadOnly="True" Width="500" Text="{Binding Winebinary }">
+            <TextBox.InnerRightContent>
+                <Button Command="{Binding SelectWineBinaryCommand }">X</Button>
+                </TextBox.InnerRightContent>
+        </TextBox>
+        
+        <Label Grid.Row="2" Grid.Column="0">Wine Prefix:</Label>
+        <TextBox  VerticalAlignment="Center" Watermark="Wine Prefix" Grid.Column="1" Grid.Row="2" IsReadOnly="True" Width="500" Text="{Binding Wineprefix}">
+            <TextBox.InnerRightContent>
+                <Button Command="{Binding SelectWinePrefixCommand}">X</Button>
+                </TextBox.InnerRightContent>
+            </TextBox>
+        
+    </Grid>
 </UserControl>

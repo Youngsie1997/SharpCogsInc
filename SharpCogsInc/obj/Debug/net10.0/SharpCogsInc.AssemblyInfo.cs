@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SharpCogsInc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03b36612452d09028e741ae3be3cd2a04d57dc98")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b8fee6a7a4ac6c1e2e7fde43342f9f2537745df")]
 [assembly: System.Reflection.AssemblyProductAttribute("SharpCogsInc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SharpCogsInc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
