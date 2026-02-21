@@ -5,16 +5,17 @@ namespace SharpCogsInc.Models;
 public class ClashAccount
 {
     [JsonPropertyName("username")]
-    public string Username { get; set; }
+    public required string Username { get; init; }
+
     [JsonPropertyName("token")]
-    public string Token { get; set; }
+    public required string Token { get; init; }
+
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public required int Id { get; init; }
 
 
-    override public string ToString()
+    public override string ToString()
     {
-        return Username;
+        return $"{Username}";
     }
 }
-

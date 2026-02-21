@@ -1,8 +1,15 @@
+using System.Text.Json.Serialization;
+
 namespace SharpCogsInc.Models;
 
 public class ClashRegisterDto
 {
-    public required string username {get; set;}
-    public required string password {get; set;}  
-    public required string friendly {get; set; }
+    [JsonPropertyName("username")]
+    public required string Username { get; set; }
+
+    [JsonPropertyName("password")]
+    public required string Password { get; set; }
+
+    [JsonPropertyName("friendly")]
+    public required string Friendly { get; set; }
 }

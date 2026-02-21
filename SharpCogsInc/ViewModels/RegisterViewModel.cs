@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,15 +10,18 @@ namespace SharpCogsInc.ViewModels;
 
 public partial class RegisterViewModel : PageViewModel
 {
-
     private readonly INavigationService _navigationService;
     private readonly ApiService _apiService;
+
     [ObservableProperty]
-    private string? _username;
+    private string? _username = string.Empty;
+
     [ObservableProperty]
-    private string? _friendly;
+    private string _friendly = string.Empty;
+
     [ObservableProperty]
-    private string? _password;
+    private string _password = string.Empty;
+
     public RegisterViewModel(INavigationService navigationService, ApiService apiService)
     {
         _navigationService = navigationService;
@@ -26,40 +30,53 @@ public partial class RegisterViewModel : PageViewModel
     }
 
 
-
     [RelayCommand]
     private async Task Register()
     {
-        if (Username != null && Password != null && Friendly != null)
+        try
         {
-                    ClashRegisterDto registerDto = new ClashRegisterDto
-                    {
-                        username = Username,
-                        password = Password,
-                        friendly = Friendly,
-                    };
-        
-                    var response = await _apiService.RegisterClient(registerDto);
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password) ||
+                string.IsNullOrWhiteSpace(Friendly))
+            {
+                return;
+            }
 
-                    Debug.Assert(registerDto.username != null );
-                    if (response.Id != null)
-                    {
-                        var account = new ClashAccount
-                        {
-                            Username = registerDto.username,
-                            Token = response.Token,
-                            Id = response.Id.Value
-                        };
-                        await FileService.SaveToFileAsync(account);
-                        _navigationService.NavigateTo(ApplicationPageNames.Home);
-                    }
+            var registerDto = new ClashRegisterDto
+            {
+                Username = Username,
+                Password = Password,
+                Friendly = Friendly,
+            };
+            var response = await _apiService.RegisterClient(registerDto);
+            if (response?.Status is null or false)
+                throw new RegisterException();
+            {
+                var account = new ClashAccount
+                {
+                    Username = registerDto.Username,
+                    Token = response.Token,
+                    Id = response.Id
+                };
+                await FileService.SaveToFileAsync(account);
+
+                _navigationService.NavigateTo(ApplicationPageNames.Home);
+            }
+        }
+        catch (RegisterException)
+        {
+            // Display message to user
+            Console.WriteLine("Register failed check username,password and friendly");
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e.Message);
+            throw;
         }
     }
 
     [RelayCommand]
     private void GoToHome()
     {
-       _navigationService.NavigateTo(ApplicationPageNames.Home); 
+        _navigationService.NavigateTo(ApplicationPageNames.Home);
     }
-        }
-
+}
