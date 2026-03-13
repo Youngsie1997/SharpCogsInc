@@ -1,4 +1,4 @@
-Custom launcher for the Toontown Online Disney Fan Server
+Custom launcher for the Corporate Clash  Toontown Online Disney Fan Server
 
 The offical launcher missbehaves using WINE on Linux sometimes.
 
